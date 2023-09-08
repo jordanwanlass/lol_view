@@ -55,6 +55,7 @@ model User {
     image         String?
     accounts      Account[]
     sessions      Session[]
+    riotId        RiotId?
 }
 
 model VerificationToken {
@@ -64,3 +65,18 @@ model VerificationToken {
 
     @@unique([identifier, token])
 }
+
+model RiotId {
+    userId  String @unique
+    riot_id String
+    tagline String
+    user    User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+    @@unique([riot_id, tagline])
+}
+
+// model Match {
+//     id     String @id @default(cuid())
+//     gameId Int
+//     kills  Int
+// }
