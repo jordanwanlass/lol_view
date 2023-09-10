@@ -1,6 +1,4 @@
-import { NextPage } from "next";
-import { useSession } from "next-auth/react";
-import Link from "next/link";
+import { type NextPage } from "next";
 import { PortalLayout } from "~/components/PortalLayout";
 import { api } from "~/utils/api";
 
@@ -13,16 +11,17 @@ const IndividualStats: NextPage = () => {
 };
 const Content = () => {
   const { data: riotIdData, isLoading: riotIdLoading } =
-    api.riotId.get.useQuery();
+    api.riotAccount.get.useQuery();
   return (
-    <>
-      {riotIdData ? (
+    <div className="col-span-3 flex flex-col px-2">
+      <div className="mb-12 mt-4">
+        <h1 className="text-6xl font-bold">Individual Stats</h1>
+      </div>
+      {riotIdLoading ? (
+        <></>
+      ) : riotIdData ? (
         <>Success</>
       ) : (
-        <div className="flex flex-col col-span-3 px-2">
-        <div className="mt-4 mb-12">
-          <h1 className="text-6xl font-bold">Individual Stats</h1>
-        </div>
         <div className="alert alert-warning">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -42,9 +41,8 @@ const Content = () => {
             settings.
           </span>
         </div>
-        </div>
       )}
-    </>
+    </div>
   );
 };
 

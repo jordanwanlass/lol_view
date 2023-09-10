@@ -1,6 +1,6 @@
 import { exampleRouter } from "~/server/api/routers/example";
 import { createTRPCRouter } from "~/server/api/trpc";
-import { riotIdRouter } from "./routers/riotId";
+import { riotAccountRouter } from "./routers/riotAccount";
 // import { matchRouter } from "./routers/match";
 
 /**
@@ -10,7 +10,7 @@ import { riotIdRouter } from "./routers/riotId";
  */
 export const appRouter = createTRPCRouter({
   example: exampleRouter,
-  riotId: riotIdRouter,
+  riotAccount: riotAccountRouter,
   // match: matchRouter,
 });
 
