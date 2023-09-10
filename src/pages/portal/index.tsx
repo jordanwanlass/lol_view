@@ -12,6 +12,11 @@ const IndividualStats: NextPage = () => {
 const Content = () => {
   const { data: riotIdData, isLoading: riotIdLoading } =
     api.riotAccount.get.useQuery();
+
+  const { data: matchIds, isLoading: matchIdsLoading } = api.match.get.useQuery(
+    { count: 20 },
+  );
+  console.log(matchIds);
   return (
     <div className="col-span-3 flex flex-col px-2">
       <div className="mb-12 mt-4">
@@ -20,7 +25,11 @@ const Content = () => {
       {riotIdLoading ? (
         <></>
       ) : riotIdData ? (
-        <>Success</>
+        <>
+          {matchIds?.map((id) => {
+            return <div key={id}>{id}</div>;
+          })}
+        </>
       ) : (
         <div className="alert alert-warning">
           <svg

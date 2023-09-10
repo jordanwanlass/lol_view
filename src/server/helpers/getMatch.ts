@@ -2,10 +2,20 @@ import axios, { type AxiosResponse } from "axios";
 import { env } from "~/env.mjs";
 
 type AxiosData = {
-  puuid: string
+  info: MatchInfo
 }
 
-export const getPuuid = async (riotId: string, tagline: string): Promise<string> => {
+type MatchInfo = {
+  gameId: string
+  participants: Participants[]
+}
+
+type Participants = {
+  kills: string
+  deaths: string
+}
+
+export const getMatch = async (id: string | null | undefined): Promise<AxiosResponse<AxiosData>> => {
   const config = {
     headers: {
       "Accept-Language": "en-US,en;q=0.9",
@@ -13,10 +23,12 @@ export const getPuuid = async (riotId: string, tagline: string): Promise<string>
       "X-Riot-Token": env.RIOT_API_KEY,
     },
   };
-  
+
   const response: AxiosResponse<AxiosData> = await axios.get(
-    `https://americas.api.riotgames.com/riot/account/v1/accounts/by-riot-id/${riotId}/${tagline}`,
+    `https://americas.api.riotgames.com/lol/match/v5/matches/${id}`,
     config,
-  )
-  return response.data.puuid;
+  );
+
+
+  return response;
 };

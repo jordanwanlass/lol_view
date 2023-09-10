@@ -1,7 +1,7 @@
 import { exampleRouter } from "~/server/api/routers/example";
 import { createTRPCRouter } from "~/server/api/trpc";
 import { riotAccountRouter } from "./routers/riotAccount";
-// import { matchRouter } from "./routers/match";
+import { matchRouter } from "./routers/match";
 
 /**
  * This is the primary router for your server.
@@ -11,7 +11,7 @@ import { riotAccountRouter } from "./routers/riotAccount";
 export const appRouter = createTRPCRouter({
   example: exampleRouter,
   riotAccount: riotAccountRouter,
-  // match: matchRouter,
+  match: matchRouter,
 });
 
 // export type definition of API
