@@ -16,10 +16,50 @@ export const matchRouter = createTRPCRouter({
       });
 
       const ids: string[] = await getMatchIds(riotAccount?.puuid, input.count)
-      const match = await getMatch(ids[0])
-      // ids.forEach((id) => {
-      //   console.log(getMatch(id))
-      // })
-      return ids;
+      ids.map(async (id) => {
+        const match = await getMatch(id)
+        
+        const participant = match?.data?.info?.participants?.find((p) => p.puuid === riotAccount?.puuid)
+        await ctx.prisma.match.create({
+          data: {
+            user_id: ctx.session.user.id,
+            game_id: match?.data?.info?.gameId ?? 0,
+            kills: participant?.kills ?? 0,
+            deaths: participant?.deaths ?? 0,
+            assists: participant?.assists ?? 0,
+            firstBloodKill: participant?.firstBloodKill ?? false,
+            firstTowerKill: participant?.firstTowerKill ?? false,
+            championName: participant?.championName ?? "",
+            goldEarned: participant?.goldEarnerd ?? 0,
+            magicDamageDealtToChampions: participant?.magicDamageDealtToChampions ?? 0,
+            physicalDamageDealtToChampions: participant?.physicalDamageDealtToChampinos ?? 0,
+            visionScore: participant?.visionScore ?? 0,
+            win: participant?.win ?? false,
+            gameCreation: new Date(match.data.info.gameCreation)
+          }
+        })
+      })
+      return await ctx.prisma.match.findMany({
+        where: {
+          user_id: ctx.session.user.id
+        },
+        orderBy: {
+          gameCreation: 'desc'
+        }
+      });
     }),
+  getMostPlayedChamp: protectedProcedure.query(({ctx}) => {
+    return ctx.prisma.match.groupBy({
+      by: 'championName',
+      _count: {
+        championName: true
+      },
+      orderBy: {
+        _count: {
+          championName: 'desc'
+        }
+      },
+      take: 1
+    })
+  }) 
 });

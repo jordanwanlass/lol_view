@@ -48,14 +48,15 @@ model Session {
 }
 
 model User {
-    id            String    @id @default(cuid())
+    id            String       @id @default(cuid())
     name          String?
-    email         String?   @unique
+    email         String?      @unique
     emailVerified DateTime?
     image         String?
     accounts      Account[]
     sessions      Session[]
     riotAccount   RiotAccount?
+    matches       Match[]
 }
 
 model VerificationToken {
@@ -77,8 +78,22 @@ model RiotAccount {
     @@unique([riot_id, tagline])
 }
 
-// model Match {
-//     id     String @id @default(cuid())
-//     gameId Int
-//     kills  Int
-// }
+model Match {
+    id                             String   @id @default(cuid())
+    user_id                        String
+    game_id                        BigInt   @unique
+    kills                          BigInt
+    deaths                         BigInt
+    assists                        BigInt
+    firstBloodKill                 Boolean
+    firstTowerKill                 Boolean
+    championName                   String
+    goldEarned                     BigInt
+    magicDamageDealtToChampions    BigInt
+    physicalDamageDealtToChampions BigInt
+    visionScore                    Int
+    win                            Boolean
+    gameCreation                   DateTime
+    createdAt                      DateTime @default(now())
+    user                           User     @relation(fields: [user_id], references: [id], onDelete: Cascade)
+}
