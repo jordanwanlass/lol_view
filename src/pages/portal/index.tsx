@@ -76,13 +76,13 @@ const Content = () => {
             <div className="stat">
               <div className="stat-title">Last 20 Avg. KDA</div>
               <div className="stat-value">{avgKda.toString()}</div>
-              {/* <div className="stat-desc">↘︎ 90 (14%)</div> */}
             </div>
           </div>
           <div className="overflow-x-auto my-10">
             <table className="table">
               <thead>
                 <tr>
+                  <td></td>
                   <td>Champion</td>
                   <td>KDA</td>
                   <td>Total gold Earned</td>
@@ -90,8 +90,9 @@ const Content = () => {
                 </tr>
               </thead>
               <tbody>
-                {matches?.map((match) => (
+                {matches?.map((match, idx) => (
                   <tr key={match.id}>
+                    <td>{idx + 1}</td>
                     <td>{match.championName}</td>
                     <td>{match.kills.toString()}/{match.deaths.toString()}/{match.assists.toString()}</td>
                     <td>{match.goldEarned.toString()}</td>
