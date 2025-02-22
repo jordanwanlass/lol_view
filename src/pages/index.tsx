@@ -24,12 +24,12 @@ const Hero = () => {
             understanding of how you and your teammates play so you can start
             earning more LP than you know what to do with.
           </p>
-          <button
+          {/* <button
             className="btn btn-primary"
             onClick={() => void signIn("discord", { callbackUrl: "/portal" })}
           >
             Get Started
-          </button>
+          </button> */}
         </div>
       </div>
     </div>
