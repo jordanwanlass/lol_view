@@ -26,12 +26,13 @@ const Header = () => {
             </div>
           </label>
         ) : (
-          <button
-            className="btn btn-ghost rounded-btn"
-            onClick={() => void signIn('discord',{ callbackUrl: '/portal' })}
-          >
-             Login
-          </button>
+          // <button
+          //   className="btn btn-ghost rounded-btn"
+          //   onClick={() => void signIn('discord',{ callbackUrl: '/portal' })}
+          // >
+          //    Login
+          // </button>
+          <></>
         )}
       </div>
     </div>
